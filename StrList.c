@@ -87,12 +87,6 @@ char* StrList_firstData(const StrList* list)
 	return list->_head->_data;
 }
 
-// void List_insertFirst(StrList* list, char* data)
-// {
-// 	list->_head= Node_alloc(data,list->_head);
-// 	++(list->_size);
-// }
-
 void StrList_print(const StrList* list)
 {
 	if (list == NULL)
@@ -118,7 +112,6 @@ void StrList_print(const StrList* list)
 		printf(" %s",p->_data);
 		p = p->_next;
 	}
-	// printf("|| size:%zu\n",list->_size);
 	printf("\n");
 }
 
@@ -142,9 +135,6 @@ int StrList_printLen(const StrList* list)
 	return sum;
 }
 
-/*
- * Given a string, return the number of times it exists in the list.
- */
 int StrList_count(StrList* list, const char* data)
 {
 	const Node* p = list->_head;
@@ -158,9 +148,6 @@ int StrList_count(StrList* list, const char* data)
 	return count;
 }
 
-/*
- * Given a string and a list, remove all the appearances of this string in the list.
-*/
 void StrList_remove(StrList* list, const char* data)
 {
 	Node* p1 = list->_head;
@@ -189,9 +176,6 @@ void StrList_remove(StrList* list, const char* data)
 	}
 }
 
-/*
- * Given an index and a list, remove the string at that index.
-*/
 void StrList_removeAt(StrList* list, int index)
 {
 	if (list == NULL || list->_head == NULL || index < 0 || index >= list->_size || list->_size < 1)
@@ -248,9 +232,6 @@ StrList* StrList_clone(const StrList* list)
 	return ret;
 }
 
-/*
- * Reverses the given StrList.
- */
 void StrList_reverse(StrList* list)
 {
 	if (list == NULL || list->_head == NULL || list->_size < 1)
@@ -270,16 +251,11 @@ void StrList_reverse(StrList* list)
 	list->_head = p2;
 }
 
-/*
- * Sort the given list in lexicographical order
- */
-// Helper function for comparing two strings
 int compareStrings(const void* a, const void* b)
 {
 	return strcmp(*(const char **) a, *(const char **) b);
 }
 
-#if 1
 void StrList_sort(StrList* list)
 {
 	if (list == NULL || list->_head == NULL || list->_size < 1)
@@ -295,42 +271,7 @@ void StrList_sort(StrList* list)
 		node->_data = strings[i];
 	free(strings);
 }
-#endif
 
-#if 0
-void StrList_sort(StrList* list)
-{
-	if (list->_size < 2)
-		return;
-	while (!StrList_isSorted(list))
-	{
-		Node* p1 = list->_head;
-		Node* p2 = p1->_next;
-		Node* p3;
-		while(p2)
-		{
-			p3 = p2->_next;
-			if (strcmp(p1->_data, p2->_data) > 0)
-			{
-				p1->_next = p3;
-				p2->_next = list->_head;
-				list->_head = p2;
-				p2 = p3;
-			}
-			else
-			{
-				p1 = p2;
-				p2 = p3;
-			}
-		}
-	}
-}
-#endif
-
-/*
- * Checks if the given list is sorted in lexicographical order
- * returns 1 for sorted,   0 otherwise
- */
 int StrList_isSorted(StrList* list)
 {
 	if (list == NULL || list->_head == NULL || list->_size < 1)
