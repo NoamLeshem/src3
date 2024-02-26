@@ -175,10 +175,16 @@ void StrList_removeAt(StrList* list, int index)
 		return;
 	Node* p1 = list->_head;
 	Node* p2 = p1->_next;
-	for (int i = 0; i < index - 1; i++)
+	if (!index)
+	{
+		list->_head = list->_head->_next;
+		Node_free(p1);
+		--(list->_size);
+		return;
+	}
+	for (int i = 0; i < index - 1; i++, p2 = p2->_next)
 	{
 		p1 = p2;
-		p2 = p2->_next;
 	}
 	p1->_next = p2->_next;
 	Node_free(p2);
