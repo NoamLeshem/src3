@@ -39,7 +39,8 @@ StrList* StrList_alloc()
 
 void StrList_free(StrList* list)
 {
-	if (list == NULL) return;
+	if (list == NULL || list->_head == NULL || list->_size < 1)
+		return;
 	Node* p1 = list->_head;
 	Node* p2;
 	while(p1)
@@ -89,17 +90,7 @@ char* StrList_firstData(const StrList* list)
 
 void StrList_print(const StrList* list)
 {
-	if (list == NULL)
-	{
-		printf("\n");
-		return;
-	}
-	if (list->_head == NULL)
-	{
-		printf("\n");
-		return;
-	}
-	if (list->_size < 1)
+	if (list == NULL || list->_head == NULL || list->_size < 1)
 	{
 		printf("\n");
 		return;
@@ -127,6 +118,8 @@ void StrList_printAt(const StrList* list, int index)
 
 int StrList_printLen(const StrList* list)
 {
+	if (list == NULL || list->_head == NULL || list->_size < 1)
+		return 0;
 	int sum = 0;
 	for (const Node* p = list->_head; p; p = p->_next)
 	{

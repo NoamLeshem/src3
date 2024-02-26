@@ -2,9 +2,9 @@
 #include <string.h>
 #include "StrList.h"
 
-char* myGetLine()
+char* myGetLine(char* data)
 {
-    char* data = NULL;
+    data = NULL;
     size_t len = 0;
     getline(&data, &len, stdin);
     data[strcspn(data, "\r\n")] = 0;
@@ -39,7 +39,8 @@ int main(int argc, char* argv[])
         {
             int n = 0;
             scanf("%d", &n);getchar();
-            char* data = myGetLine();
+            char* data = NULL;
+            data = myGetLine(data);
             char* word = strtok(data, " ");
             while (word != NULL)
             {
@@ -47,14 +48,17 @@ int main(int argc, char* argv[])
                 word = strtok(NULL, " ");
                 n--;
             }
+            free(data);
             if (n != 0) return 1;
         }
         else if (choice == INSERT_AT)
         {
             int index;
             scanf("%d", &index);getchar();
-            char* data = myGetLine();
+            char* data = NULL;
+            data = myGetLine(data);
             StrList_insertAt(list, data, index);
+            free(data);
         }
         else if (choice == PRINT)
             StrList_print(list);
@@ -70,13 +74,17 @@ int main(int argc, char* argv[])
             printf("%d\n", StrList_printLen(list));
         else if (choice == COUNT)
         {
-            char* data = myGetLine();
+            char* data = NULL;
+            data = myGetLine(data);
             printf("%d\n", StrList_count(list, data));
+            free(data);
         }
         else if (choice == REMOVE)
         {
-            char* data = myGetLine();
+            char* data = NULL;
+            data = myGetLine(data);
             StrList_remove(list, data);
+            free(data);
         }
         else if (choice == REMOVE_AT)
         {
@@ -93,6 +101,7 @@ int main(int argc, char* argv[])
         else if (choice == IS_SORTED)
             printf("%s\n", StrList_isSorted(list) ? "true" : "false");
     }
-
+    StrList_free(list);
+    free(list); // free the list itself (not the elements in the list, they are freed in StrList_free() function
     return 0;
 }
