@@ -365,6 +365,15 @@ void test_StrList_sort() {
     printf("\n");
 }
 
+char* myGetLine()
+{
+    char* data = NULL;
+    size_t len = 0;
+    getline(&data, &len, stdin);
+    data[strcspn(data, "\r\n")] = 0;
+    return data;
+}
+
 int main(int argc, char* argv[])
 {
 	StrList* list = StrList_alloc();
@@ -376,10 +385,7 @@ int main(int argc, char* argv[])
 		{
 			int n = 0;
 			scanf("%d", &n);getchar();
-			char *data = NULL;
-			size_t len = 0;
-			getline(&data, &len, stdin);
-			data[strcspn(data, "\r\n")] = 0;
+			char* data = myGetLine();
 			char* word = strtok(data, " ");
 			while (word != NULL)
 			{
@@ -393,8 +399,7 @@ int main(int argc, char* argv[])
 		{
 			int index;
 			scanf("%d", &index);getchar();
-			char* data = (char*) malloc(100);
-			scanf("%s", data);
+			char* data = myGetLine();
 			StrList_insertAt(list, data, index);
 		}
 		else if (choice == 3)
@@ -411,14 +416,12 @@ int main(int argc, char* argv[])
 			printf("%d\n", StrList_printLen(list));
 		else if (choice == 7)
 		{
-			char* data = (char*) malloc(100);
-			scanf("%s", data);
+			char* data = myGetLine();
 			printf("%d\n", StrList_count(list, data));
 		}
 		else if (choice == 8)
 		{
-			char* data = (char*) malloc(100);
-			scanf("%s", data);
+			char* data = myGetLine();
 			StrList_remove(list, data);
 		}
 		else if (choice == 9)
