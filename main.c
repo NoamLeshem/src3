@@ -106,31 +106,31 @@ void test_StrList_count()
 
     int countApple = StrList_count(list, "Apple");
     if (countApple == 3)
-	{
+    {
         printf("PASS: Count of 'Apple' is 3.\n");
     }
-	else
-	{
+    else
+    {
         printf("FAIL: Count of 'Apple' is not 3.\n");
     }
 
     int countBanana = StrList_count(list, "Banana");
     if (countBanana == 1)
-	{
+    {
         printf("PASS: Count of 'Banana' is 1.\n");
     }
-	else
-	{
+    else
+    {
         printf("FAIL: Count of 'Banana' is not 1.\n");
     }
 
     int countOrange = StrList_count(list, "Orange");
     if (countOrange == 0)
-	{
+    {
         printf("PASS: Count of 'Orange' is 0.\n");
     }
-	else
-	{
+    else
+    {
         printf("FAIL: Count of 'Orange' is not 0.\n");
     }
 
@@ -230,21 +230,21 @@ void test_StrList_isEqual()
 
     int isEqual12 = StrList_isEqual(list1, list2);
     if (isEqual12 == 1)
-	{
+    {
         printf("PASS: List 1 is equal to List 2.\n");
     }
-	else
-	{
+    else
+    {
         printf("FAIL: List 1 is not equal to List 2.\n");
     }
 
     int isEqual13 = StrList_isEqual(list1, list3);
     if (isEqual13 == 0)
-	{
+    {
         printf("PASS: List 1 is not equal to List 3.\n");
     }
-	else
-	{
+    else
+    {
         printf("FAIL: List 1 is equal to List 3.\n");
     }
 
@@ -254,11 +254,11 @@ void test_StrList_isEqual()
     printf("Comparing empty lists:\n");
     int isEqualEmpty = StrList_isEqual(emptyList1, emptyList2);
     if (isEqualEmpty == 1)
-	{
+    {
         printf("PASS: Empty lists are equal.\n");
     }
-	else
-	{
+    else
+    {
         printf("FAIL: Empty lists are not equal.\n");
     }
     StrList_free(emptyList1);
@@ -374,72 +374,89 @@ char* myGetLine()
     return data;
 }
 
+enum
+{
+    INSERT_LAST = 1,
+    INSERT_AT,
+    PRINT,
+    SIZE,
+    PRINT_AT,
+    PRINT_LEN,
+    COUNT,
+    REMOVE,
+    REMOVE_AT,
+    REVERSE,
+    FREE,
+    SORT,
+    IS_SORTED
+};
+
 int main(int argc, char* argv[])
 {
-	StrList* list = StrList_alloc();
-	int choice = -1;
-	while (choice)
-	{
-		scanf("%d", &choice);getchar();
-		if (choice == 1)
-		{
-			int n = 0;
-			scanf("%d", &n);getchar();
-			char* data = myGetLine();
-			char* word = strtok(data, " ");
-			while (word != NULL)
-			{
-				StrList_insertLast(list, word);
-				word = strtok(NULL, " ");
-				n--;
-			}
-			if (n != 0) return 1;
-		}
-		else if (choice == 2)
-		{
-			int index;
-			scanf("%d", &index);getchar();
-			char* data = myGetLine();
-			StrList_insertAt(list, data, index);
-		}
-		else if (choice == 3)
-			StrList_print(list);
-		else if (choice == 4)
-			printf("%ld\n", StrList_size(list));
-		else if (choice == 5)
-		{
-			int index;
-			scanf("%d", &index);
-			StrList_printAt(list, index);
-		}
-		else if (choice == 6)
-			printf("%d\n", StrList_printLen(list));
-		else if (choice == 7)
-		{
-			char* data = myGetLine();
-			printf("%d\n", StrList_count(list, data));
-		}
-		else if (choice == 8)
-		{
-			char* data = myGetLine();
-			StrList_remove(list, data);
-		}
-		else if (choice == 9)
-		{
-			int index;
-			scanf("%d", &index);
-			StrList_removeAt(list, index);
-		}
-		else if (choice == 10)
-			StrList_reverse(list);
-		else if (choice == 11)
-			StrList_free(list);
-		else if (choice == 12)
-			StrList_sort(list);
-		else if (choice == 13)
-			printf("%s\n", StrList_isSorted(list) ? "true" : "false");
-	}
-	// test_StrList_alloc_free();
+    StrList* list = StrList_alloc();
+    int choice = -1;
+    while (choice)
+    {
+        scanf("%d", &choice);getchar();
+        if (choice == INSERT_LAST)
+        {
+            int n = 0;
+            scanf("%d", &n);getchar();
+            char* data = myGetLine();
+            char* word = strtok(data, " ");
+            while (word != NULL)
+            {
+                StrList_insertLast(list, word);
+                word = strtok(NULL, " ");
+                n--;
+            }
+            if (n != 0) return 1;
+        }
+        else if (choice == INSERT_AT)
+        {
+            int index;
+            scanf("%d", &index);getchar();
+            char* data = myGetLine();
+            StrList_insertAt(list, data, index);
+        }
+        else if (choice == PRINT)
+            StrList_print(list);
+        else if (choice == SIZE)
+            printf("%ld\n", StrList_size(list));
+        else if (choice == 5)
+        {
+            int index;
+            scanf("%d", &index);
+            StrList_printAt(list, index);
+        }
+        else if (choice == PRINT_LEN)
+            printf("%d\n", StrList_printLen(list));
+        else if (choice == COUNT)
+        {
+            char* data = myGetLine();
+            printf("%d\n", StrList_count(list, data));
+        }
+        else if (choice == REMOVE)
+        {
+            char* data = myGetLine();
+            StrList_remove(list, data);
+        }
+        else if (choice == REMOVE_AT)
+        {
+            int index;
+            scanf("%d", &index);
+            StrList_removeAt(list, index);
+        }
+        else if (choice == REVERSE)
+            StrList_reverse(list);
+        else if (choice == FREE)
+            StrList_free(list);
+        else if (choice == SORT)
+            StrList_sort(list);
+        else if (choice == IS_SORTED)
+            printf("%s\n", StrList_isSorted(list) ? "true" : "false");
+    }
+    // test_StrList_alloc_free();
     // test_StrList_size();
     // test_StrList_insertLast();
     // test_StrList_firstData();
@@ -451,5 +468,5 @@ int main(int argc, char* argv[])
     // test_StrList_clone();
     // test_StrList_reverse();
     // test_StrList_sort();
-	return 0;
+    return 0;
 }
